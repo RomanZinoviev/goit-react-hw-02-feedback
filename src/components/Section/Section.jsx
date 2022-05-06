@@ -1,4 +1,4 @@
-
+import PropTypes from 'prop-types';
 export function Section({title, children}) {
     return (
         <div className="feedback">
@@ -6,4 +6,8 @@ export function Section({title, children}) {
             <div>{children}</div>
         </div>
     )
+}
+Section.propTypes = {
+    title: PropTypes.string,
+    children:PropTypes.element
 }

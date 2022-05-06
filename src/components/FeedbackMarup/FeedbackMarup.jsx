@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import { Statistics } from './Statistics';
-import { FeedbackOptions } from './FeedbackOptions';
-import { Section } from './Section';
+import { Statistics } from '../Statistics/Statistics';
+import { FeedbackOptions } from '../FeedbackOptions/FeedbackOptions';
+import { Section } from '../Section/Section';
 
 export class FeedbackMarup extends Component {
   state = {
@@ -24,13 +24,16 @@ export class FeedbackMarup extends Component {
             return {bad:prevState.bad+1}
         })
     };
-    countTotalFeedback() {
-        return(this.state.good+this.state.neutral+this.state.bad)
+  countTotalFeedback() {
+    const { good, neutral, bad } = this.state;
+        return(good+neutral+bad)
     };
-    countPositiveFeedbackPercentage() {
-        return(Math.round(this.state.good/this.countTotalFeedback()*100))
+  countPositiveFeedbackPercentage() {
+    const { good } = this.state;
+        return(Math.round(good/this.countTotalFeedback()*100))
     };
   render() {
+    const { good, neutral, bad } = this.state;
     return (
       <>
             <Section
@@ -44,14 +47,13 @@ export class FeedbackMarup extends Component {
             <Section
                 title="Statistics"
                 children={<Statistics
-          good={this.state.good}
-          neutral={this.state.neutral}
-          bad={this.state.bad}
+          good={good}
+          neutral={neutral}
+          bad={bad}
           total={this.countTotalFeedback()}
           positivePercentage={this.countPositiveFeedbackPercentage()}
         />}
-            />
-        
+            />        
       </>
     );
   }
