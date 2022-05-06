@@ -8,52 +8,47 @@ export class FeedbackMarup extends Component {
     good: 0,
     neutral: 0,
     bad: 0,
-    };
-    handleForButtonGood=()=> { 
-        this.setState((prevState) => {
-            return {good:prevState.good+1}
-        })
-    };
-    handleForButtonNeutral=()=> { 
-        this.setState((prevState) => {
-            return {neutral:prevState.neutral+1}
-        })
-    };
-    handleForButtonBad=()=> { 
-        this.setState((prevState) => {
-            return {bad:prevState.bad+1}
-        })
-    };
+  };
+  handleForButton = e => {
+    const name = e.target.name;
+    this.setState(prevState => {
+      return { [name]: prevState[name] + 1 };
+    });
+  };
   countTotalFeedback() {
     const { good, neutral, bad } = this.state;
-        return(good+neutral+bad)
-    };
+    return good + neutral + bad;
+  }
   countPositiveFeedbackPercentage() {
     const { good } = this.state;
-        return(Math.round(good/this.countTotalFeedback()*100))
-    };
+    return Math.round((good / this.countTotalFeedback()) * 100);
+  }
   render() {
     const { good, neutral, bad } = this.state;
+    const param = Object.keys(this.state);
     return (
       <>
-            <Section
-                title="Please leave feedback"
-            children={<FeedbackOptions
-          onLeaveFeedbackGood={this.handleForButtonGood}
-          onLeaveFeedbackNeutral={this.handleForButtonNeutral}
-          onLeaveFeedbackBad={this.handleForButtonBad}
-        />}
+        <Section
+          title="Please leave feedback"
+          children={
+            <FeedbackOptions
+              options={param}
+              onLeaveFeedback={this.handleForButton}
             />
-            <Section
-                title="Statistics"
-                children={<Statistics
-          good={good}
-          neutral={neutral}
-          bad={bad}
-          total={this.countTotalFeedback()}
-          positivePercentage={this.countPositiveFeedbackPercentage()}
-        />}
-            />        
+          }
+        />
+        <Section
+          title="Statistics"
+          children={
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={this.countTotalFeedback()}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          }
+        />
       </>
     );
   }
