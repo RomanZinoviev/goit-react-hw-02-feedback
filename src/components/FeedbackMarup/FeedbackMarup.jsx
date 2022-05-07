@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Statistics } from '../Statistics/Statistics';
 import { FeedbackOptions } from '../FeedbackOptions/FeedbackOptions';
 import { Section } from '../Section/Section';
+import { Notificftion } from "components/Notification/Notification";
 
 export class FeedbackMarup extends Component {
   state = {
@@ -25,7 +26,7 @@ export class FeedbackMarup extends Component {
   }
   render() {
     const { good, neutral, bad } = this.state;
-    const param = Object.keys(this.state);
+    const param = Object.keys(this.state);    
     return (
       <>
         <Section
@@ -39,14 +40,14 @@ export class FeedbackMarup extends Component {
         />
         <Section
           title="Statistics"
-          children={
+          children={good||neutral||bad?
             <Statistics
               good={good}
               neutral={neutral}
               bad={bad}
               total={this.countTotalFeedback()}
               positivePercentage={this.countPositiveFeedbackPercentage()}
-            />
+            />:<Notificftion message="There is no feedback"/>
           }
         />
       </>
